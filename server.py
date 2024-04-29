@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 # Defining the /home endpoint with the GET method.
-# Function to handle the /home endpoint
+# Function to handle the /home endpoint: trying to check the server rresponse here
 @app.route('/home', methods=['GET'])
 def home():
     server_id = os.environ.get('SERVER_ID', '1')
