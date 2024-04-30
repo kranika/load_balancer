@@ -18,3 +18,5 @@ ENV SERVER_ID=1
 
 # Command to run the Flask server
 CMD ["python", "server.py"]
+
+#Make sure your account is in the docker group
