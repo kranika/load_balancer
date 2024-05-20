@@ -6,15 +6,27 @@ services:
       - "5000:5000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - load_balancer_network
   server_1:
     image: server-image
     environment:
       - SERVER_ID=1
+    networks:
+      - load_balancer_network
   server_2:
     image: server-image
     environment:
       - SERVER_ID=2
+    networks:
+      - load_balancer_network
   server_3:
     image: server-image
     environment:
       - SERVER_ID=3
+    networks:
+      - load_balancer_network
+
+networks:
+  load_balancer_network:
+    driver: bridge
