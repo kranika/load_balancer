@@ -1,0 +1,20 @@
+version: '3'
+services:
+  load_balancer:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  server_1:
+    image: server-image
+    environment:
+      - SERVER_ID=1
+  server_2:
+    image: server-image
+    environment:
+      - SERVER_ID=2
+  server_3:
+    image: server-image
+    environment:
+      - SERVER_ID=3
