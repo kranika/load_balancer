@@ -1,7 +1,7 @@
 import os
 import random
 import docker
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
@@ -12,14 +12,18 @@ network_name = "load_balancer_network"  # Ensure this matches the network name i
 def start_new_server():
     server_id = random.randint(1000, 9999)
     container_name = f"server_{server_id}"
-    container = client.containers.run(
-        "server-image",
-        name=container_name,
-        environment={"SERVER_ID": server_id},
-        network=network_name,
-        detach=True
-    )
-    return container_name
+    try:
+        container = client.containers.run(
+            "server-image",
+            name=container_name,
+            environment={"SERVER_ID": server_id},
+            network=network_name,
+            detach=True
+        )
+        return container_name
+    except docker.errors.APIError as e:
+        print(f"Error starting container {container_name}: {e}")
+        return None
 
 @app.route('/rep', methods=['GET'])
 def get_replicas():
