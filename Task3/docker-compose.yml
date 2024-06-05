@@ -1,0 +1,32 @@
+version: '3'
+services:
+  load_balancer:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - task3_load_balancer_network
+  server_1:
+    image: server-image
+    environment:
+      - SERVER_ID=1
+    networks:
+      - task3_load_balancer_network
+  server_2:
+    image: server-image
+    environment:
+      - SERVER_ID=2
+    networks:
+      - task3_load_balancer_network
+  server_3:
+    image: server-image
+    environment:
+      - SERVER_ID=3
+    networks:
+      - task3_load_balancer_network
+
+networks:
+  task3_load_balancer_network:
+    driver: bridge
