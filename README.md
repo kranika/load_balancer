@@ -1,68 +1,131 @@
-# Load Balancer and Server Instance Management with Docker
 
-This project demonstrates a scalable load balancing system using Docker and Flask. The load balancer can dynamically manage server instances, providing flexibility to scale up or down based on demand or maintenance requirements.
+# Customizable Load Balancer
+
+## Group Members
+1. Ruman Hassan
+2. Charles Owako
+3. Cynthia Chemutai
+4. Joyline Karanja
 
 ## Overview
 
-### Task 1: Setting Up the Initial Environment
+This project implements a customizable load balancer using consistent hashing. The load balancer distributes client requests among several server replicas to evenly distribute the load.
 
-**Purpose:**  
-The first task focused on setting up the initial environment for the load balancer and server instances. This involved creating a Docker Compose configuration that defines multiple services, ensuring they can communicate within a shared network.
+## Prerequisites
+- Docker
+- Docker Compose
+- Python 3.x
+- Required Python packages (listed in requirements.txt or installed directly within the Docker containers)
 
-**Key Steps:**
+## Building and Running the Project
+1. Clone the Repository
 
-1. **Docker Compose Setup:**
-    - Created a `docker-compose.yml` file that defines the services: `server_1`, `server_2`, `server_3`, and `load_balancer`.
-    - Configured each server service to run a simple Flask application.
-    - Ensured all services are connected to a common network (`load_balancer_network`).
+   ```sh 
+   git clone git@github.com:jKaranja19/load_balancer.git 
+   ```
 
-2. **Flask Application for Server Instances:**
-    - Developed a basic Flask application that runs on each server instance.
-    - Each server instance responds to a heartbeat request to indicate it is alive and operational.
+2. Build and Start the Containers
 
-**Outcome:**  
-This setup provides a scalable environment where new server instances can be added or removed dynamically, with a load balancer managing the distribution of requests.
+   ```sh
+    docker-compose up --build
+    ```
 
-### Task 2: Implementing Load Balancer Endpoints
+- This command will build the Docker images for the load balancer and the servers, and start the containers.
 
-**Purpose:**  
-The second task involved implementing RESTful endpoints in the load balancer to manage the server instances. This allows for scaling up or down the number of server instances based on the load or maintenance requirements.
+## Running Performance Analysis
+1. Open a new terminal window:
+- Open a new terminal or split your current terminal.
+- Navigate to the project directory: 
+   ```sh
+   cd /load_balancer/load_balancer_project/my_load_balancer 
+   ```
+2. Run the performance analysis script:
+   ```sh 
+   python3 performance_analysis.py 
+   ```
+- This script will send requests to the load balancer and collect performance data. It will then generate visualizations (bar graphs and line charts) and save them in the project directory.
+![Run Script](./load_balancer_project/my_load_balancer/image.png)
 
-**Key Steps:**
+## Project Analysis
+The performance analysis is a crucial part of this project, providing insights into the efficiency and behavior of the load balancer under different conditions. The analysis is divided into four main parts: A-1 to A-4.
 
-1. **GET /rep Endpoint:**
-    - Implemented an endpoint that returns the list of currently running server instances.
-    - The load balancer queries Docker to list containers with names starting with `server_`.
+### A-1: Load Distribution among Servers
 
-2. **GET /heartbeat Endpoint:**
-    - Implemented a heartbeat endpoint to check if the load balancer itself is running.
+**Objective:** Launch 10,000 async requests on 3 server containers and report the request count handled by each server instance in a bar chart.
 
-3. **POST /add Endpoint:**
-    - Developed an endpoint to add new server instances.
-    - Validates the request payload to ensure the number of hostnames does not exceed the number of instances to be added.
-    - Starts new Docker containers based on the specified or randomly assigned hostnames.
+**Method:**
+- Launched 10,000 requests using an async approach.
+- Recorded the number of requests each server handled.
+- Generated a bar chart to visualize the distribution.
 
-**Outcome:**  
-These endpoints provide the necessary API to interact with the load balancer for adding new servers and querying the current state of the server instances.
+**Observations:**
+- The bar chart shows a roughly even distribution of requests among the three servers.
+- This indicates that the load balancer is effectively distributing the load.
+**Relative Results**
+![Results Provided](./load_balancer_project/my_load_balancer/results.png)
+**Bar Chart:**
+![Request Distribution](./load_balancer_project/my_load_balancer/bar_chart.png)
 
-### Task 3: Implementing Server Removal Endpoint
+### A-2: Scalability Analysis
 
-**Purpose:**  
-The third task focused on implementing an endpoint to remove server instances, allowing for scaling down based on decreased demand or during maintenance.
+**Objective:** Increment the number of server containers from 2 to 6 and launch 10,000 requests on each increment. Report the average load of the servers at each run in a line chart.
 
-**Key Steps:**
+**Method:**
+- Incremented the number of servers from 2 to 6.
+- Launched 10,000 requests for each configuration.
+- Calculated the average load handled by the servers.
+- Generated a line chart to visualize the scalability.
 
-1. **DELETE /rm Endpoint:**
-    - Developed an endpoint to remove server instances.
-    - Validates the request payload to ensure the list of hostnames does not exceed the number of instances to be removed.
-    - Removes the specified server instances or randomly selects instances for removal if no specific hostnames are provided.
+**Observations:**
+- The line chart shows that the average load per server decreases as the number of servers increases.
+- This demonstrates the scalability of the load balancer implementation.
 
-2. **Validation and Error Handling:**
-    - Ensured that appropriate error messages and status codes are returned for invalid requests (e.g., when the list of hostnames is longer than the number of instances to be removed).
+**Line Chart:**
+![Scalability Analysis](./load_balancer_project/my_load_balancer/line_chart.png)
 
-**Outcome:**  
-This endpoint completes the load balancer functionality by providing the ability to remove server instances, making the system adaptable to changing load conditions and maintenance needs.
+### A-3: Server Failure Recovery
 
-## Overall Purpose
+**Objective:** Test all endpoints of the load balancer and show that in case of server failure, the load balancer spawns a new instance quickly to handle the load.
 
-The combined tasks establish a dynamic and scalable load balancing system using Docker and Flask. The load balancer can scale server instances up or down based on the system's requirements, ensuring efficient resource utilization and high availability. By managing server instances dynamically, the system can maintain optimal performance and reliability, adapting to varying client demands and operational conditions.
+**Method:**
+- Simulated server failure scenarios.
+- Observed how quickly the load balancer spawned new instances.
+- Ensured all endpoints remained functional during recovery.
+
+**Observations:**
+- The load balancer successfully spawned new instances to handle the load.
+- There was minimal downtime, demonstrating effective failure recovery.
+
+### A-4: Modified Hash Functions
+
+**Objective:** Modify the hash functions H(i) and Φ(i, j) and report the observations from experiments A-1 and A-2.
+
+**Method:**
+- Modified the hash functions used in the load balancer.
+- Repeated experiments A-1 and A-2 with the modified hash functions.
+- Compared the results with the original implementation.
+
+**Observations:**
+- The modified hash functions resulted in a different distribution pattern in experiment A-1.
+- In experiment A-2, the scalability remained consistent, indicating robustness in the load balancer design.
+
+## Graphical Represenation of Response Time
+
+![Response Time Chart](./load_balancer_project/my_load_balancer/response_time_chart.png)
+## Troubleshooting
+### Common Issues
+1. Port conflicts: Ensure no other services are running on the same ports used by the Docker containers.
+2. Docker daemon not running: Make sure Docker is installed and running on your system.
+3. dependency issues: Ensure all required Python packages are installed within the Docker containers.
+
+### Solutions
+- Check running services: 
+   - Use the following to stop existing services:
+   ```sh
+   docker stop $(docker ps -a -q)
+   ```
+   ```sh
+   docker rm $(docker ps -a -q)
+   ```
+
+- Restart Docker: Sometimes, restarting the Docker daemon can resolve connectivity issues.
