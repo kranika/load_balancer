@@ -60,7 +60,8 @@ The performance analysis is a crucial part of this project, providing insights i
 **Observations:**
 - The bar chart shows a roughly even distribution of requests among the three servers.
 - This indicates that the load balancer is effectively distributing the load.
-
+**Relative Results**
+![Results Provided](./load_balancer_project/my_load_balancer/results.png)
 **Bar Chart:**
 ![Request Distribution](bar_chart.png)
 
@@ -79,7 +80,7 @@ The performance analysis is a crucial part of this project, providing insights i
 - This demonstrates the scalability of the load balancer implementation.
 
 **Line Chart:**
-![Scalability Analysis](line_chart.png)
+![Scalability Analysis](./load_balancer_project/my_load_balancer/line_chart.png)
 
 ### A-3: Server Failure Recovery
 
