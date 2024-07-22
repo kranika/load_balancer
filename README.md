@@ -35,9 +35,13 @@ This project implements a customizable load balancer using consistent hashing. T
 1. Open a new terminal window:
 - Open a new terminal or split your current terminal.
 - Navigate to the project directory: 
-   ``` cd /load_balancer/load_balancer_project/my_load_balancer ```
+   ```sh
+   cd /load_balancer/load_balancer_project/my_load_balancer 
+   ```
 2. Run the performance analysis script:
-   ``` python3 performance_analysis.py ```
+   ```sh 
+   python3 performance_analysis.py 
+   ```
 - This script will send requests to the load balancer and collect performance data. It will then generate visualizations (bar graphs and line charts) and save them in the project directory.
 ![Run Script](./load_balancer_project/my_load_balancer/image.png)
 
