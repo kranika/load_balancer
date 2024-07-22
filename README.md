@@ -63,7 +63,7 @@ The performance analysis is a crucial part of this project, providing insights i
 **Relative Results**
 ![Results Provided](./load_balancer_project/my_load_balancer/results.png)
 **Bar Chart:**
-![Request Distribution](bar_chart.png)
+![Request Distribution](./load_balancer_project/my_load_balancer/bar_chart.png)
 
 ### A-2: Scalability Analysis
 
