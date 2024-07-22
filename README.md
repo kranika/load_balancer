@@ -21,7 +21,7 @@ This project implements a customizable load balancer using consistent hashing. T
 1. Clone the Repository
 
    ```sh 
-   git clone git@github.com:jKaranja19/load_balancer.git 
+   git clone git@github.com:ruman-hassan/load_balancer.git 
    ```
 
 2. Build and Start the Containers
