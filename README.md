@@ -1,63 +1,81 @@
-# Load Balancer Projects
-This is a customised load balancer that is part of a class assignment
+# Customizable Load Balancer
 
-### Overview of Each Task
-#### Task 1: Setting Up the Initial Environment
+## Group Members
+1. Ruman Hassan
+2. Charles Owako
+3. Cynthia Chemutai
+4. Joyline Karanja
 
-*Purpose:*
-The first task focused on setting up the initial environment for the load balancer and server instances. This involved creating a Docker Compose configuration that defines multiple services, ensuring they can communicate within a shared network.
+## Overview
 
-*Key Steps:*
-1. *Docker Compose Setup*:
-    - Created a docker-compose.yml file that defines the services: server_1, server_2, server_3, and the load_balancer.
-    - Configured each server service to run a simple Flask application.
-    - Ensured all services are connected to a common network (load_balancer_network).
+This project implements a customizable load balancer using consistent hashing. The load balancer distributes client requests among several server replicas to evenly distribute the load.
 
-2. *Flask Application for Server Instances*:
-    - Developed a basic Flask application that runs on each server instance.
-    - Each server instance responds to a heartbeat request to indicate it is alive and operational.
+## Prerequisites
+- Docker
+- Docker Compose
+- Python 3.x
+- Required Python packages (listed in requirements.txt or installed directly within the Docker containers)
 
-*Outcome:*
-This setup provides a scalable environment where new server instances can be added or removed dynamically, with a load balancer managing the distribution of requests.
+## Building and Running the Project
+1. Clone the Repository
 
-#### Task 2: Implementing Load Balancer Endpoints
+   ``` git clone git@github.com:jKaranja19/load_balancer.git ```
 
-*Purpose:*
-The second task involved implementing RESTful endpoints in the load balancer to manage the server instances. This allows for scaling up or down the number of server instances based on the load or maintenance requirements.
+2. Build and Start the Containers
 
-*Key Steps:*
-1. **GET /rep Endpoint**:
-    - Implemented an endpoint that returns the list of currently running server instances.
-    - The load balancer queries Docker to list containers with names starting with server_.
+   ``` docker-compose up --build ```
 
-2. **GET /heartbeat Endpoint**:
-    - Implemented a heartbeat endpoint to check if the load balancer itself is running.
+- This command will build the Docker images for the load balancer and the servers, and start the containers.
 
-3. **POST /add Endpoint**:
-    - Developed an endpoint to add new server instances.
-    - Validates the request payload to ensure the number of hostnames does not exceed the number of instances to be added.
-    - Starts new Docker containers based on the specified or randomly assigned hostnames.
+## Running Performance Analysis
+1. Open a new terminal window:
+- Open a new terminal or split your current terminal.
+- Navigate to the project directory: 
+   ``` cd /load_balancer/load_balancer_project/my_load_balancer ```
+2. Run the performance analysis script:
+   ``` python3 performance_analysis.py ```
+- This script will send requests to the load balancer and collect performance data. It will then generate visualizations (bar graphs and line charts) and save them in the project directory.
+![Run Script](./load_balancer_project/my_load_balancer/image.png)
 
-*Outcome:*
-These endpoints provide the necessary API to interact with the load balancer for adding new servers and querying the current state of the server instances.
+## Project Analysis
+The performance analysis is a crucial part of this project, providing insights into the efficiency and behavior of the load balancer under different conditions. The analysis is divided into four main parts: A-1 to A-4.
 
-#### Task 3: Implementing Server Removal Endpoint
+### A-1: Response Time Collection
+- In this part, we measure the response times of requests processed by the load balancer. The performance_analysis.py script sends a series of HTTP requests to the load balancer and records the time taken for each request to receive a response. The collected data includes:
+   - Timestamp: When the request was sent.
+   - Response Time: Time taken to receive a response.
+   - Server Response: Which server responded to the request.
+- This data provides a detailed view of how quickly the load balancer and backend servers handle incoming requests.
+![Response Time](./load_balancer/load_balancer_project/my_load_balancer/response_time.png)
 
-*Purpose:*
-The third task focused on implementing an endpoint to remove server instances, allowing for scaling down based on decreased demand or during maintenance.
+### A-2: Data Visualization - Response Time Bar Graphs
+- Using the collected response time data, the script generates bar graphs to visualize the response times of individual requests. Each bar represents the response time for a single request, making it easy to see the distribution and variability of response times.
+- Key insights from the bar graphs include:
+   - Response Time Distribution: Identifying patterns or anomalies in the response times.
+   - Performance Outliers: Spotting requests that took significantly longer to process, which may indicate bottlenecks or issues with specific servers.
+![Response Time Bar Graph](./load_balancer/load_balancer_project/my_load_balancer/bar_graph.png)
 
-*Key Steps:*
-1. **DELETE /rm Endpoint**:
-    - Developed an endpoint to remove server instances.
-    - Validates the request payload to ensure the list of hostnames does not exceed the number of instances to be removed.
-    - Removes the specified server instances or randomly selects instances for removal if no specific hostnames are provided.
+### A-3: Data Visualization - Load Distribution Line Charts
+- In addition to response times, the analysis also looks at how the load is distributed among the backend servers. The script generates line charts showing the number of requests handled by each server over time. Each line represents a different server.
+- Key insights from the line charts include:
+   - Load Balancing Efficiency: Determining if the load balancer distributes requests evenly across servers.
+   - Server Utilization Patterns: Identifying if any server is underutilized or overloaded.
 
-2. *Validation and Error Handling*:
-    - Ensured that appropriate error messages and status codes are returned for invalid requests (e.g., when the list of hostnames is longer than the number of instances to be removed).
+![Line Chart Response Time Representation](.load_balancer_project/my_load_balancer/line_chart.png)
 
-*Outcome:*
-This endpoint completes the load balancer functionality by providing the ability to remove server instances, making the system adaptable to changing load conditions and maintenance needs.
+### A-4: Comprehensive Analysis and Interpretation
+- Combining the insights from the response time bar graphs and load distribution line charts, we perform a comprehensive analysis to understand the overall performance and efficiency of the load balancer. This includes:
+   - Identifying Bottlenecks: Analyzing response times to pinpoint slow responses and their causes.
+   - Evaluating Load Balancer Algorithm: Assessing how well the load balancing algorithm distributes the load.
+   - Server Performance: Comparing the performance of individual servers to identify any that are underperforming.
 
-### Overall Purpose
+## Troubleshooting
+### Common Issues
+1. Port conflicts: Ensure no other services are running on the same ports used by the Docker containers.
+2. Docker daemon not running: Make sure Docker is installed and running on your system.
+3. dependency issues: Ensure all required Python packages are installed within the Docker containers.
 
-The combined tasks establish a dynamic and scalable load balancing system using Docker and Flask. The load balancer can scale server instances up or down based on the system's requirements, ensuring efficient resource utilization and high availability. By managing server instances dynamically, the system can maintain optimal performance and reliability, adapting to varying client demands and operational conditions.
+### Solutions
+- Check running services: 
+   - Use docker ps to see if any containers are already using the required ports.
+- Restart Docker: Sometimes, restarting the Docker daemon can resolve connectivity issues.
