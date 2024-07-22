@@ -48,35 +48,70 @@ This project implements a customizable load balancer using consistent hashing. T
 ## Project Analysis
 The performance analysis is a crucial part of this project, providing insights into the efficiency and behavior of the load balancer under different conditions. The analysis is divided into four main parts: A-1 to A-4.
 
-### A-1: Response Time Collection
-- In this part, we measure the response times of requests processed by the load balancer. The performance_analysis.py script sends a series of HTTP requests to the load balancer and records the time taken for each request to receive a response. The collected data includes:
-   - Timestamp: When the request was sent.
-   - Response Time: Time taken to receive a response.
-   - Server Response: Which server responded to the request.
-- This data provides a detailed view of how quickly the load balancer and backend servers handle incoming requests.
-![Response Time](./load_balancer_project/my_load_balancer/response_time.png)
+### A-1: Load Distribution among 3 Servers
 
-### A-2: Data Visualization - Response Time Bar Graphs
-- Using the collected response time data, the script generates bar graphs to visualize the response times of individual requests. Each bar represents the response time for a single request, making it easy to see the distribution and variability of response times.
-- Key insights from the bar graphs include:
-   - Response Time Distribution: Identifying patterns or anomalies in the response times.
-   - Performance Outliers: Spotting requests that took significantly longer to process, which may indicate bottlenecks or issues with specific servers.
-![Response Time Bar Graph](./load_balancer_project/my_load_balancer/bar_graph.png)
+**Objective:** Launch 10,000 async requests on 3 server containers and report the request count handled by each server instance in a bar chart.
 
-### A-3: Data Visualization - Load Distribution Line Charts
-- In addition to response times, the analysis also looks at how the load is distributed among the backend servers. The script generates line charts showing the number of requests handled by each server over time. Each line represents a different server.
-- Key insights from the line charts include:
-   - Load Balancing Efficiency: Determining if the load balancer distributes requests evenly across servers.
-   - Server Utilization Patterns: Identifying if any server is underutilized or overloaded.
+**Method:**
+- Launched 10,000 requests using an async approach.
+- Recorded the number of requests each server handled.
+- Generated a bar chart to visualize the distribution.
 
-![Line Chart Response Time Representation](./load_balancer_project/my_load_balancer/line_chart.png)
+**Observations:**
+- The bar chart shows a roughly even distribution of requests among the three servers.
+- This indicates that the load balancer is effectively distributing the load.
 
-### A-4: Comprehensive Analysis and Interpretation
-- Combining the insights from the response time bar graphs and load distribution line charts, we perform a comprehensive analysis to understand the overall performance and efficiency of the load balancer. This includes:
-   - Identifying Bottlenecks: Analyzing response times to pinpoint slow responses and their causes.
-   - Evaluating Load Balancer Algorithm: Assessing how well the load balancing algorithm distributes the load.
-   - Server Performance: Comparing the performance of individual servers to identify any that are underperforming.
+**Bar Chart:**
+![Request Distribution](bar_chart.png)
 
+### A-2: Scalability Analysis
+
+**Objective:** Increment the number of server containers from 2 to 6 and launch 10,000 requests on each increment. Report the average load of the servers at each run in a line chart.
+
+**Method:**
+- Incremented the number of servers from 2 to 6.
+- Launched 10,000 requests for each configuration.
+- Calculated the average load handled by the servers.
+- Generated a line chart to visualize the scalability.
+
+**Observations:**
+- The line chart shows that the average load per server decreases as the number of servers increases.
+- This demonstrates the scalability of the load balancer implementation.
+
+**Line Chart:**
+![Scalability Analysis](line_chart.png)
+
+### A-3: Server Failure Recovery
+
+**Objective:** Test all endpoints of the load balancer and show that in case of server failure, the load balancer spawns a new instance quickly to handle the load.
+
+**Method:**
+- Simulated server failure scenarios.
+- Observed how quickly the load balancer spawned new instances.
+- Ensured all endpoints remained functional during recovery.
+
+**Observations:**
+- The load balancer successfully spawned new instances to handle the load.
+- There was minimal downtime, demonstrating effective failure recovery.
+
+### A-4: Modified Hash Functions
+
+**Objective:** Modify the hash functions H(i) and Φ(i, j) and report the observations from experiments A-1 and A-2.
+
+**Method:**
+- Modified the hash functions used in the load balancer.
+- Repeated experiments A-1 and A-2 with the modified hash functions.
+- Compared the results with the original implementation.
+
+**Observations:**
+- The modified hash functions resulted in a different distribution pattern in experiment A-1.
+- In experiment A-2, the scalability remained consistent, indicating robustness in the load balancer design.
+
+## Setup and Execution
+
+1. **Build and run the Docker containers:**
+   ```sh
+   docker-compose up --build
 ## Troubleshooting
 ### Common Issues
 1. Port conflicts: Ensure no other services are running on the same ports used by the Docker containers.
