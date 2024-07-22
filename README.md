@@ -48,7 +48,7 @@ This project implements a customizable load balancer using consistent hashing. T
 ## Project Analysis
 The performance analysis is a crucial part of this project, providing insights into the efficiency and behavior of the load balancer under different conditions. The analysis is divided into four main parts: A-1 to A-4.
 
-### A-1: Load Distribution among 3 Servers
+### A-1: Load Distribution among Servers
 
 **Objective:** Launch 10,000 async requests on 3 server containers and report the request count handled by each server instance in a bar chart.
 
@@ -107,11 +107,9 @@ The performance analysis is a crucial part of this project, providing insights i
 - The modified hash functions resulted in a different distribution pattern in experiment A-1.
 - In experiment A-2, the scalability remained consistent, indicating robustness in the load balancer design.
 
-## Setup and Execution
+## Graphical Represenation of Response Time
 
-1. **Build and run the Docker containers:**
-   ```sh
-   docker-compose up --build
+![Response Time Chart](./load_balancer_project/my_load_balancer/response_time_chart.png)
 ## Troubleshooting
 ### Common Issues
 1. Port conflicts: Ensure no other services are running on the same ports used by the Docker containers.
