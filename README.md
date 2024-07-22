@@ -85,5 +85,12 @@ The performance analysis is a crucial part of this project, providing insights i
 
 ### Solutions
 - Check running services: 
-   - Use docker ps to see if any containers are already using the required ports.
+   - Use the following to stop existing services:
+   ```sh
+   docker stop $(docker ps -a -q)
+   ```
+   ```sh
+   docker rm $(docker ps -a -q)
+   ```
+
 - Restart Docker: Sometimes, restarting the Docker daemon can resolve connectivity issues.
