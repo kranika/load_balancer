@@ -46,14 +46,14 @@ The performance analysis is a crucial part of this project, providing insights i
    - Response Time: Time taken to receive a response.
    - Server Response: Which server responded to the request.
 - This data provides a detailed view of how quickly the load balancer and backend servers handle incoming requests.
-![Response Time](./load_balancer/load_balancer_project/my_load_balancer/response_time.png)
+![Response Time](./load_balancer_project/my_load_balancer/response_time.png)
 
 ### A-2: Data Visualization - Response Time Bar Graphs
 - Using the collected response time data, the script generates bar graphs to visualize the response times of individual requests. Each bar represents the response time for a single request, making it easy to see the distribution and variability of response times.
 - Key insights from the bar graphs include:
    - Response Time Distribution: Identifying patterns or anomalies in the response times.
    - Performance Outliers: Spotting requests that took significantly longer to process, which may indicate bottlenecks or issues with specific servers.
-![Response Time Bar Graph](./load_balancer/load_balancer_project/my_load_balancer/bar_graph.png)
+![Response Time Bar Graph](./load_balancer_project/my_load_balancer/bar_graph.png)
 
 ### A-3: Data Visualization - Load Distribution Line Charts
 - In addition to response times, the analysis also looks at how the load is distributed among the backend servers. The script generates line charts showing the number of requests handled by each server over time. Each line represents a different server.
@@ -61,7 +61,7 @@ The performance analysis is a crucial part of this project, providing insights i
    - Load Balancing Efficiency: Determining if the load balancer distributes requests evenly across servers.
    - Server Utilization Patterns: Identifying if any server is underutilized or overloaded.
 
-![Line Chart Response Time Representation](.load_balancer_project/my_load_balancer/line_chart.png)
+![Line Chart Response Time Representation](./load_balancer_project/my_load_balancer/line_chart.png)
 
 ### A-4: Comprehensive Analysis and Interpretation
 - Combining the insights from the response time bar graphs and load distribution line charts, we perform a comprehensive analysis to understand the overall performance and efficiency of the load balancer. This includes:
