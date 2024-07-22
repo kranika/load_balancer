@@ -19,11 +19,15 @@ This project implements a customizable load balancer using consistent hashing. T
 ## Building and Running the Project
 1. Clone the Repository
 
-   ``` git clone git@github.com:jKaranja19/load_balancer.git ```
+   ```sh 
+   git clone git@github.com:jKaranja19/load_balancer.git 
+   ```
 
 2. Build and Start the Containers
 
-   ``` docker-compose up --build ```
+   ```sh
+    docker-compose up --build
+    ```
 
 - This command will build the Docker images for the load balancer and the servers, and start the containers.
 
